@@ -2,8 +2,8 @@ package test
 
 //
 //import (
-//	dtos "github.com/djfemz/rave/rave-app/dtos/request"
-//	"github.com/djfemz/rave/rave-app/services"
+//	dtos "github.com/djfemz/rave/partybank-app/dtos/request"
+//	"github.com/djfemz/rave/partybank-app/services"
 //	"github.com/stretchr/testify/assert"
 //	"testing"
 //)

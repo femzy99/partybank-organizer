@@ -1,11 +1,11 @@
 package test
 
 import (
-	dtos "github.com/djfemz/rave/rave-app/dtos/request"
-	"github.com/djfemz/rave/rave-app/models"
-	"github.com/djfemz/rave/rave-app/repositories"
-	"github.com/djfemz/rave/rave-app/services"
-	"github.com/djfemz/rave/rave-app/utils"
+	dtos "github.com/djfemz/organizer-service/partybank-app/dtos/request"
+	"github.com/djfemz/organizer-service/partybank-app/models"
+	"github.com/djfemz/organizer-service/partybank-app/repositories"
+	"github.com/djfemz/organizer-service/partybank-app/services"
+	"github.com/djfemz/organizer-service/partybank-app/utils"
 	"github.com/stretchr/testify/assert"
 	"log"
 	"testing"
@@ -14,7 +14,7 @@ import (
 func TestUpdateAttendee(t *testing.T) {
 	username := utils.GenerateTicketReference()
 	attendee := &models.Attendee{
-		FullName: "John Doe",
+		FirstName: "John Doe",
 		User: &models.User{
 			Username: username,
 			Role:     models.ATTENDEE,
@@ -30,7 +30,7 @@ func TestUpdateAttendee(t *testing.T) {
 		PhoneNumber: "09087654356",
 	}
 
-	res, err := attendeeService.UpdateAttendee(attendee.ID, updateAttendeeRequest)
+	res, err := attendeeService.UpdateAttendee(username, updateAttendeeRequest)
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
 	attendee, err = attendeeRepository.FindById(attendee.ID)
@@ -38,5 +38,5 @@ func TestUpdateAttendee(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, attendee)
 	assert.Equal(t, username, attendee.Username)
-	assert.Equal(t, "James Doe", attendee.FullName)
+	assert.Equal(t, "James Doe", attendee.FirstName)
 }

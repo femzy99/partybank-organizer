@@ -2,8 +2,8 @@ package test
 
 //
 //import (
-//	"github.com/djfemz/rave/rave-app/models"
-//	"github.com/djfemz/rave/rave-app/utils"
+//	"github.com/djfemz/rave/partybank-app/models"
+//	"github.com/djfemz/rave/partybank-app/utils"
 //	"log"
 //	"testing"
 //)

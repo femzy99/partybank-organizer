@@ -2,8 +2,8 @@ package test
 
 //
 //import (
-//	"github.com/djfemz/rave/rave-app/models"
-//	"github.com/djfemz/rave/rave-app/security"
+//	"github.com/djfemz/rave/partybank-app/models"
+//	"github.com/djfemz/rave/partybank-app/security"
 //	"github.com/stretchr/testify/assert"
 //	"testing"
 //	"time"

@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/djfemz/rave/rave-app/security/otp"
+	"github.com/djfemz/rave/partybank-app/security/otp"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

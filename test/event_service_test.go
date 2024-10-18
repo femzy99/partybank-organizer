@@ -2,8 +2,8 @@ package test
 
 //
 //import (
-//	request "github.com/djfemz/rave/rave-app/dtos/request"
-//	"github.com/djfemz/rave/rave-app/services"
+//	request "github.com/djfemz/rave/partybank-app/dtos/request"
+//	"github.com/djfemz/rave/partybank-app/services"
 //	"github.com/stretchr/testify/assert"
 //	"log"
 //	"testing"
@@ -16,7 +16,7 @@ package test
 //		Name:               "test event",
 //		Location:           "Sabo Yaba",
 //		Date:               "2024-03-23",
-//		Time:               "12:00:00",
+//		StartTime:               "12:00:00",
 //		ContactInformation: "09023456789",
 //		Description:        "this is a test event",
 //	}
@@ -38,7 +38,7 @@ package test
 //		Name:               "test event",
 //		Location:           "Sabo Yaba",
 //		Date:               "2024-03-23",
-//		Time:               "12:00:00",
+//		StartTime:               "12:00:00",
 //		ContactInformation: "09023256887",
 //		Description:        "this is a test event",
 //	}

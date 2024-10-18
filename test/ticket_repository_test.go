@@ -1,7 +1,7 @@
 package test
 
 //import (
-//	"github.com/djfemz/rave/rave-app/repositories"
+//	"github.com/djfemz/rave/partybank-app/repositories"
 //	"github.com/stretchr/testify/assert"
 //	"log"
 //	"testing"

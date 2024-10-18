@@ -24,25 +24,23 @@ definitions:
     type: object
   dtos.CreateEventRequest:
     properties:
-      attendee_term:
-        type: string
-      city:
+      address:
         type: string
       contact_information:
-        type: string
-      country:
         type: string
       date:
         type: string
       description:
         type: string
+      end_time:
+        type: string
       event_theme:
         type: string
       image_url:
         type: string
-      map_embedded_url:
+      lat:
         type: string
-      map_url:
+      lng:
         type: string
       name:
         type: string
@@ -50,21 +48,22 @@ definitions:
         type: integer
       series_id:
         type: integer
-      state:
-        type: string
-      time:
+      start_time:
         type: string
       venue:
         type: string
+      visibility:
+        type: string
     required:
-    - country
+    - address
     - date
+    - end_time
     - name
     - organizer_id
     - series_id
-    - state
-    - time
+    - start_time
     - venue
+    - visibility
     type: object
   dtos.CreateSeriesRequest:
     properties:
@@ -88,16 +87,9 @@ definitions:
       colour:
         type: string
       event_id:
-        description: AdditionalInformationFields  models.AdditionalInformationFields
-          `json:"additional_information_fields"`
         type: integer
       is_transfer_payment_fees_to_guest:
-        description: |-
-          DiscountType                 string                             `json:"discount_type"`
-          Percentage float64 `json:"percentage"`
-          DiscountPrice                float64                            `json:"discount_price"`
-          DiscountCode                 string                             `json:"discount_code"`
-          AvailableDiscountedTickets   uint64                             `json:"available_discounted_tickets"`
+        description: 'TODO: Default: false'
         type: boolean
       name:
         type: string
@@ -230,7 +222,9 @@ definitions:
     type: object
   dtos.UpdateAttendeeRequest:
     properties:
-      full_name:
+      first_name:
+        type: string
+      last_name:
         type: string
       phone_number:
         type: string
@@ -309,12 +303,16 @@ definitions:
         type: string
       event_id:
         type: integer
+      event_reference:
+        type: string
       id:
         type: integer
       is_sold_out_ticket:
         type: boolean
       is_transfer_payment_fees_to_guest:
         type: boolean
+      max_seats:
+        type: integer
       name:
         type: string
       number_available:
@@ -327,6 +325,8 @@ definitions:
         type: integer
       reference:
         type: string
+      reserved:
+        type: integer
       stock:
         type: string
       ticket_perks:
@@ -336,7 +336,7 @@ definitions:
       type:
         type: string
     type: object
-host: rave.onrender.com
+host: partybank-organizer-269c8057a65f.herokuapp.com
 info:
   contact:
     email: unavailable
@@ -350,7 +350,7 @@ info:
   title: Partybank Organizer Service
   version: "1.0"
 paths:
-  /api/v1/attendee/update:
+  /api/v1/attendee/update/{username}:
     put:
       consumes:
       - application/json

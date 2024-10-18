@@ -24,7 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/attendee/update": {
+        "/api/v1/attendee/update/{username}": {
             "put": {
                 "security": [
                     {
@@ -988,26 +988,21 @@ const docTemplate = `{
         "dtos.CreateEventRequest": {
             "type": "object",
             "required": [
-                "country",
+                "address",
                 "date",
+                "end_time",
                 "name",
                 "organizer_id",
                 "series_id",
-                "state",
-                "time",
-                "venue"
+                "start_time",
+                "venue",
+                "visibility"
             ],
             "properties": {
-                "attendee_term": {
-                    "type": "string"
-                },
-                "city": {
+                "address": {
                     "type": "string"
                 },
                 "contact_information": {
-                    "type": "string"
-                },
-                "country": {
                     "type": "string"
                 },
                 "date": {
@@ -1016,16 +1011,19 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
+                "end_time": {
+                    "type": "string"
+                },
                 "event_theme": {
                     "type": "string"
                 },
                 "image_url": {
                     "type": "string"
                 },
-                "map_embedded_url": {
+                "lat": {
                     "type": "string"
                 },
-                "map_url": {
+                "lng": {
                     "type": "string"
                 },
                 "name": {
@@ -1037,13 +1035,13 @@ const docTemplate = `{
                 "series_id": {
                     "type": "integer"
                 },
-                "state": {
-                    "type": "string"
-                },
-                "time": {
+                "start_time": {
                     "type": "string"
                 },
                 "venue": {
+                    "type": "string"
+                },
+                "visibility": {
                     "type": "string"
                 }
             }
@@ -1084,11 +1082,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "event_id": {
-                    "description": "AdditionalInformationFields  models.AdditionalInformationFields ` + "`" + `json:\"additional_information_fields\"` + "`" + `",
                     "type": "integer"
                 },
                 "is_transfer_payment_fees_to_guest": {
-                    "description": "DiscountType                 string                             ` + "`" + `json:\"discount_type\"` + "`" + `\nPercentage float64 ` + "`" + `json:\"percentage\"` + "`" + `\nDiscountPrice                float64                            ` + "`" + `json:\"discount_price\"` + "`" + `\nDiscountCode                 string                             ` + "`" + `json:\"discount_code\"` + "`" + `\nAvailableDiscountedTickets   uint64                             ` + "`" + `json:\"available_discounted_tickets\"` + "`" + `",
+                    "description": "TODO: Default: false",
                     "type": "boolean"
                 },
                 "name": {
@@ -1286,7 +1283,10 @@ const docTemplate = `{
         "dtos.UpdateAttendeeRequest": {
             "type": "object",
             "properties": {
-                "full_name": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
                     "type": "string"
                 },
                 "phone_number": {
@@ -1406,6 +1406,9 @@ const docTemplate = `{
                 "event_id": {
                     "type": "integer"
                 },
+                "event_reference": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -1414,6 +1417,9 @@ const docTemplate = `{
                 },
                 "is_transfer_payment_fees_to_guest": {
                     "type": "boolean"
+                },
+                "max_seats": {
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -1432,6 +1438,9 @@ const docTemplate = `{
                 },
                 "reference": {
                     "type": "string"
+                },
+                "reserved": {
+                    "type": "integer"
                 },
                 "stock": {
                     "type": "string"
@@ -1460,7 +1469,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "rave.onrender.com",
+	Host:             "partybank-organizer-269c8057a65f.herokuapp.com",
 	BasePath:         "",
 	Schemes:          []string{"https"},
 	Title:            "Partybank Organizer Service",

@@ -2,9 +2,9 @@ package test
 
 //
 //import (
-//	"github.com/djfemz/rave/rave-app/models"
-//	"github.com/djfemz/rave/rave-app/repositories"
-//	"github.com/djfemz/rave/rave-app/security/otp"
+//	"github.com/djfemz/rave/partybank-app/models"
+//	"github.com/djfemz/rave/partybank-app/repositories"
+//	"github.com/djfemz/rave/partybank-app/security/otp"
 //	"github.com/stretchr/testify/assert"
 //	"log"
 //	"testing"
