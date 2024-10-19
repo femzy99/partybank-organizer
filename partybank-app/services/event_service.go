@@ -79,16 +79,16 @@ func (raveEventService *raveEventService) Create(createEventRequest *request.Cre
 		log.Println("err saving event: ", err)
 		return nil, err
 	}
-	_, err = raveEventService.TicketService.AddTickets(createEventRequest.Tickets)
-	if err != nil {
-		return nil, errors.New("error adding tickets")
-	}
+	
 	_, err = raveEventService.AddEventToCalendar(calendar.ID, savedEvent)
 	if err != nil {
 		return nil, err
 	}
-	if err != nil {
-		return nil, err
+	if len(createEventRequest.Tickets) > 0 {
+		_, err = raveEventService.TicketService.AddTickets(savedEvent.ID, createEventRequest.Tickets)
+		if err != nil {
+			log.Println("error adding tickets to event")
+		}
 	}
 	res := mappers.MapEventToEventResponse(savedEvent)
 	return res, nil

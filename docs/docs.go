@@ -1038,6 +1038,12 @@ const docTemplate = `{
                 "start_time": {
                     "type": "string"
                 },
+                "tickets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dtos.CreateTicketRequest"
+                    }
+                },
                 "venue": {
                     "type": "string"
                 },
@@ -1359,10 +1365,19 @@ const docTemplate = `{
         "models.Location": {
             "type": "object",
             "properties": {
+                "address": {
+                    "type": "string"
+                },
                 "city": {
                     "type": "string"
                 },
                 "country": {
+                    "type": "string"
+                },
+                "lat": {
+                    "type": "string"
+                },
+                "lng": {
                     "type": "string"
                 },
                 "state": {

@@ -20,7 +20,7 @@ import (
 
 type TicketService interface {
 	CreateTicketFor(request *request.CreateTicketRequest) (addTicketResponse *response.TicketResponse, err error)
-	AddTickets(tickets []*request.CreateTicketRequest) ([]*response.TicketResponse, error)
+	AddTickets(eventId uint64, tickets []*request.CreateTicketRequest) ([]*response.TicketResponse, error)
 	GetById(id uint64) (*response.TicketResponse, error)
 	GetTicketById(id uint64) (*models.Ticket, error)
 	GetAllTicketsFor(eventId uint64, pageNumber, pageSize int) ([]*models.Ticket, error)
@@ -133,9 +133,10 @@ func (raveTicketService *raveTicketService) GetAllTicketsFor(eventId uint64, pag
 	return tickets, nil
 }
 
-func (raveTicketService *raveTicketService) AddTickets(tickets []*request.CreateTicketRequest) ([]*response.TicketResponse, error) {
+func (raveTicketService *raveTicketService) AddTickets(eventId uint64, tickets []*request.CreateTicketRequest) ([]*response.TicketResponse, error) {
 	res := make([]*response.TicketResponse, 0)
 	for _, ticketRequest := range tickets {
+		ticketRequest.EventId = eventId
 		ticketResponse, _ := raveTicketService.CreateTicketFor(ticketRequest)
 		res = append(res, ticketResponse)
 	}
