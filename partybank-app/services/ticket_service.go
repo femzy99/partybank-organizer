@@ -200,7 +200,12 @@ func (raveTicketService *raveTicketService) EditTickets(eventId uint64, editTick
 	for _, ticketRequest := range editTicketRequests {
 		if ticketRequest.ID == 0 {
 			createTicketRequest := mappers.MapEditTicketToCreateTicket(ticketRequest)
-			ticket, err := raveTicketService.CreateTicketFor(eventId, createTicketRequest)
+			ticket, err := raveTicketService.FindByNameForEvent(eventId, ticketRequest.Name)
+			if err == nil {
+				err = raveTicketService.DeleteById(ticket.ID)
+				log.Println("Error deleting ticket? :: ", err)
+			}
+			ticket, err = raveTicketService.CreateTicketFor(eventId, createTicketRequest)
 			if err != nil {
 				log.Println("error in edit tickets: ", err)
 				return nil, errors.New("failed to add new ticket")

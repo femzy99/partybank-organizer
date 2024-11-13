@@ -9,6 +9,7 @@ import (
 type TicketRepository interface {
 	crudRepository[models.Ticket, uint64]
 	FindAllByEventId(id uint64, pageNumber, pageSize int) ([]*models.Ticket, error)
+	FindByNameForEvent(eventId uint64, name string) (*models.Ticket, error)
 	FindTicketByReference(reference string) (*models.Ticket, error)
 	FindAllTicketsByEventId(eventId uint64) ([]*models.Ticket, error)
 	DeleteTicketsFor(eventId uint64) error
@@ -51,7 +52,6 @@ func (raveTicketRepository *raveTicketRepository) FindAllTicketsByEventId(eventI
 }
 
 func (raveTicketRepository *raveTicketRepository) DeleteAllNotIn(eventId uint64, tickets []*models.Ticket) error {
-
 	idsToKeep := make([]uint64, 0)
 	for _, ticket := range tickets {
 		idsToKeep = append(idsToKeep, ticket.ID)
@@ -62,6 +62,12 @@ func (raveTicketRepository *raveTicketRepository) DeleteAllNotIn(eventId uint64,
 		return err
 	}
 	return nil
+}
+
+func (raveTicketRepository *raveTicketRepository) FindByNameForEvent(eventId uint64, name string) (*models.Ticket, error) {
+	ticket := models.Ticket{}
+	err := raveTicketRepository.Db.Where(&models.Ticket{EventID: eventId, Name: name}).Find(&ticket).Error
+	return &ticket, err
 }
 
 func (raveTicketRepository *raveTicketRepository) DeleteTicketsFor(eventId uint64) error {
