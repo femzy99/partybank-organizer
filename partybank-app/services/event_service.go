@@ -9,6 +9,8 @@ import (
 	"github.com/djfemz/organizer-service/partybank-app/repositories"
 	"github.com/djfemz/organizer-service/partybank-app/utils"
 	"log"
+	"net/http"
+	"os"
 	"sort"
 	"strconv"
 )
@@ -265,6 +267,19 @@ func (raveEventService *raveEventService) DeleteEventBy(eventId uint64) (string,
 	event.PublicationState = "ARCHIVED"
 	err = raveEventService.EventRepository.DeleteById(eventId)
 	if err != nil {
+		return "", errors.New("failed to delete event")
+	}
+	paymentServiceDeleteEndpoint := os.Getenv("DELETE_EVENT_ENDPOINT_PAYMENT_SERVICE")
+	paymentServiceDeleteEndpoint = paymentServiceDeleteEndpoint + event.Reference
+	req, err := http.NewRequest(http.MethodPost, paymentServiceDeleteEndpoint, nil)
+	if err != nil {
+		log.Println("ERROR: failed to send delete request to payment side")
+		return "", errors.New("failed to delete event")
+	}
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil || res.StatusCode != 200 {
+		log.Println("ERROR: failed to send delete request to payment side", err)
 		return "", errors.New("failed to delete event")
 	}
 	return "event deleted successfully", nil
