@@ -202,6 +202,7 @@ func (raveTicketService *raveTicketService) EditTickets(eventId uint64, editTick
 			createTicketRequest := mappers.MapEditTicketToCreateTicket(ticketRequest)
 			ticket, err := raveTicketService.CreateTicketFor(eventId, createTicketRequest)
 			if err != nil {
+				log.Println("error in edit tickets: ", err)
 				return nil, errors.New("failed to add new ticket")
 			}
 			tickets = append(tickets, ticket)
