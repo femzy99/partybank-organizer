@@ -275,7 +275,7 @@ func (raveEventService *raveEventService) DeleteEventBy(eventId uint64) (string,
 	req, err := http.NewRequest(http.MethodPost, paymentServiceDeleteEndpoint, bytes.NewReader([]byte("")))
 
 	if err != nil {
-		log.Println("ERROR: failed to send delete request to payment side")
+		log.Println("ERROR: failed to create delete request to payment side")
 		return "", errors.New("failed to delete event")
 	}
 	client := &http.Client{}
