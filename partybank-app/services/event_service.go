@@ -1,6 +1,7 @@
 package services
 
 import (
+	"bytes"
 	"errors"
 	request "github.com/djfemz/organizer-service/partybank-app/dtos/request"
 	response "github.com/djfemz/organizer-service/partybank-app/dtos/response"
@@ -271,7 +272,7 @@ func (raveEventService *raveEventService) DeleteEventBy(eventId uint64) (string,
 	}
 	paymentServiceDeleteEndpoint := os.Getenv("DELETE_EVENT_ENDPOINT_PAYMENT_SERVICE")
 	paymentServiceDeleteEndpoint = paymentServiceDeleteEndpoint + event.Reference
-	req, err := http.NewRequest(http.MethodPost, paymentServiceDeleteEndpoint, nil)
+	req, err := http.NewRequest(http.MethodPost, paymentServiceDeleteEndpoint, bytes.NewReader([]byte("")))
 	if err != nil {
 		log.Println("ERROR: failed to send delete request to payment side")
 		return "", errors.New("failed to delete event")
