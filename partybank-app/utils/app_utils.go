@@ -48,7 +48,7 @@ func SendNewTicketMessageFor(event *models.Event) {
 		return
 	}
 	log.Println("request body: ", string(body))
-	req, err := http.NewRequest(http.MethodPost, os.Getenv("TICKET_SERVICE_URL"), bytes.NewReader(body))
+	req, err := http.NewRequest(http.MethodPost, os.Getenv("ADD_EVENT_ENDPOINT_PAYMENT_SERVICE"), bytes.NewReader(body))
 	req.Header.Add("Content-Type", "application/json")
 	log.Println("request data: ", req.Body)
 	client := &http.Client{}
