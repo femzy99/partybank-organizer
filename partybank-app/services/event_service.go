@@ -280,7 +280,7 @@ func (raveEventService *raveEventService) DeleteEventBy(eventId uint64) (string,
 	}
 	client := &http.Client{}
 	res, err := client.Do(req)
-	log.Println("delete event response from payment service: ", res)
+	log.Println("delete event response from payment service: ", res.StatusCode)
 	if err != nil || res.StatusCode != 200 {
 		log.Println("ERROR: failed to send delete request to payment side", err)
 		return "", errors.New("failed to delete event")
