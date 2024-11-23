@@ -54,6 +54,7 @@ func (raveTicketService *raveTicketService) CreateTicketFor(eventId uint64, requ
 		log.Println(errs)
 		return nil, errors.New("failed to create ticket")
 	}
+	ticket.Stock = request.Stock
 	ticket.Reference = utils.GenerateTicketReference()
 	ticket.EventID = event.ID
 	ticket.TicketPerks = request.TicketPerks
@@ -63,6 +64,7 @@ func (raveTicketService *raveTicketService) CreateTicketFor(eventId uint64, requ
 		StartTime: request.SalesStartTime,
 		EndTime:   request.SalesEndTime,
 	}
+	ticket.Capacity = request.Capacity
 	ticket.Category = request.Category
 	ticket.GroupTicketCapacity = request.GroupTicketCapacity
 	savedTicket, err := raveTicketService.TicketRepository.Save(ticket)
