@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
+	"github.com/robfig/cron"
 	"gorm.io/gorm"
 	"log"
 	"os"
@@ -85,6 +86,17 @@ func main() {
 	err = router.Run(":" + port)
 	if err != nil {
 		log.Println("Error starting server: ", err)
+	}
+
+	job := cron.New()
+	err := job.AddFunc("@daily", func() {
+		err = eventRepository.RemovePastEvents()
+		if err != nil {
+			log.Println("failed to Remove past events")
+		}
+	})
+	if err != nil {
+		log.Println("failed to create job")
 	}
 }
 

@@ -16,6 +16,7 @@ type EventRepository interface {
 	FindByReference(reference string) (*models.Event, error)
 	FindAllByOrganizer(organizerId uint64, pageNumber, pageSize int) ([]*models.Event, error)
 	DeleteEventById(eventId uint64) error
+	RemovePastEvents() error
 }
 
 type raveEventRepository struct {
@@ -92,6 +93,13 @@ func (raveEventRepository *raveEventRepository) DeleteEventById(eventId uint64) 
 	err := raveEventRepository.Db.Delete(event).Error
 	if err != nil {
 		log.Println("Error: ", err)
+		return err
+	}
+	return nil
+}
+
+func (raveEventRepository *raveEventRepository) RemovePastEvents() error {
+	if err := raveEventRepository.Db.Update("Status", models.PAST).Error; err != nil {
 		return err
 	}
 	return nil
