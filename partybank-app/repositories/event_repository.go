@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"log"
+	"time"
 )
 
 type EventRepository interface {
@@ -17,6 +18,7 @@ type EventRepository interface {
 	FindAllByOrganizer(organizerId uint64, pageNumber, pageSize int) ([]*models.Event, error)
 	DeleteEventById(eventId uint64) error
 	RemovePastEvents() error
+	FindAllUpcomingEvents() ([]*models.Event, error)
 }
 
 type raveEventRepository struct {
@@ -95,11 +97,25 @@ func (raveEventRepository *raveEventRepository) DeleteEventById(eventId uint64) 
 		log.Println("Error: ", err)
 		return err
 	}
+	log.Println("events deleted")
 	return nil
 }
 
+func (raveEventRepository *raveEventRepository) FindAllUpcomingEvents() ([]*models.Event, error) {
+	var events []*models.Event
+	if err := raveEventRepository.Db.Where(&models.Event{Status: models.UPCOMING}).Find(&events).Error; err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
 func (raveEventRepository *raveEventRepository) RemovePastEvents() error {
-	if err := raveEventRepository.Db.Update("Status", models.PAST).Error; err != nil {
+	log.Println("cron called remove past events")
+	if err := raveEventRepository.Db.
+		Model(&models.Event{}).
+		Where("event_date < ?", time.Now()).
+		Update("status", models.PAST).
+		Error; err != nil {
 		return err
 	}
 	return nil

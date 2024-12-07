@@ -16,6 +16,7 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"os"
+	"time"
 )
 
 var err error
@@ -73,7 +74,7 @@ func init() {
 func main() {
 	//partybank-organizer-269c8057a65f.herokuapp.com
 	config.GoogleConfig()
-
+	go startCron()
 	router := gin.Default()
 	configureAppComponents()
 	middlewares.Routers(router, organizerController,
@@ -88,16 +89,25 @@ func main() {
 		log.Println("Error starting server: ", err)
 	}
 
-	job := cron.New()
-	err := job.AddFunc("@daily", func() {
+}
+
+func startCron() {
+	loc, err := time.LoadLocation("Africa/Lagos")
+	if err != nil {
+		log.Fatal("timezone not found")
+	}
+	job := cron.NewWithLocation(loc)
+	err = job.AddFunc("0 0 */1 * * *", func() {
 		err = eventRepository.RemovePastEvents()
 		if err != nil {
-			log.Println("failed to Remove past events")
+			log.Fatal("failed to Remove past events")
 		}
 	})
 	if err != nil {
-		log.Println("failed to create job")
+		log.Fatal("failed to create job")
 	}
+	log.Println("Starting scheduler...")
+	job.Start()
 }
 
 func configureAppComponents() {
