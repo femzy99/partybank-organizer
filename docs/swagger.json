@@ -18,7 +18,7 @@
         },
         "version": "1.0"
     },
-    "host": "partybank-organizer-269c8057a65f.herokuapp.com",
+    "host": "partybank-organizer.onrender.com",
     "paths": {
         "/api/v1/attendee/update/{username}": {
             "put": {

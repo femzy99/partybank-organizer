@@ -377,7 +377,7 @@ definitions:
       state:
         type: string
     type: object
-host: partybank-organizer-269c8057a65f.herokuapp.com
+host: partybank-organizer.onrender.com
 info:
   contact:
     email: unavailable
